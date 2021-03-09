@@ -1,0 +1,131 @@
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul *ngIf="sesion" class="navbar-nav sidebar sidebar-dark text-white accordion"  id="accordionSidebar" style="background-color: rgb(134, 2, 2);">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <img src="assets/images/logo/logo.png" alt="" width="40" height="40" >
+            </div>
+            <div class="sidebar-brand-text mx-3">Admin</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+        
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/usuarios']">
+                <i class="fas fa-user-alt"></i>
+                <span>Usuarios</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/anuncios']">
+                <i class="fas fa-newspaper"></i>
+                <span>Anuncios</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/categorias']">
+                <i class="fas fa-grip-horizontal"></i>
+                <span>Categorias</span></a>
+        </li>
+
+        
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Ubicaciones</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Estados:</h6>
+                    <a class="collapse-item" [routerLink]="['/estados']">Estados</a>
+                    <a class="collapse-item" [routerLink]="['/municipios']">Municipios</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Heading -->
+        <!--
+        <div class="sidebar-heading">
+            Interface
+        </div>
+        -->
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!--
+        
+        -->
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+    
+    </ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div class="content">
+            <nav *ngIf="sesion" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <button id="sidebarToggleTop" class="btn d-md-none rounded-circle mr-3" style="color: rgb(134, 2, 2);">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <ul class="navbar-nav ml-auto">
+                    <div class="topbar-divider d-none d-sm-block"></div>
+                    
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ identity.name + ' ' + identity.lastname }}</span>
+                            <img *ngIf="identity.image" src="{{url + 'image/' + identity.image}}" alt="" width="35px" height="35px" class="rounded-circle">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" [routerLink]="['/logout/1']" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Cerrar sesión
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- End of Topbar -->
+            <div class="container-fluid">
+                <!-- El contenido de la pagina-->
+                <router-outlet ></router-outlet>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Cargando...</p>
+</ngx-spinner>

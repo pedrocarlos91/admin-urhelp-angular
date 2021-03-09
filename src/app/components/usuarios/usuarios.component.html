@@ -1,0 +1,141 @@
+<h1>Usuarios</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="float-left">Tabla de Usuarios</h6>
+        <a class="btn btn-success text-white float-right" (click)="openModal(userModal)">
+            <i class="fas fa-user-plus"></i>
+            Nuevo usuario
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success mt-3" *ngIf="status == 'success'">
+            {{ message }}. 
+        </div>
+        <div class="alert alert-danger mt-3" *ngIf="status == 'error'">
+            {{ message }}
+            <ul>
+              <li *ngFor="let e of errores"> {{ e }} </li>
+            </ul>
+        </div>
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID Usuario</th>
+                        <th>Correo</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>RFC</th>
+                        <th>Rol</th>
+                        <th>Última Actualización</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td> {{user.id}} </td>
+                        <td> {{user.email}} </td>
+                        <td> {{user.name}} </td>
+                        <td> {{user.lastname}} </td>
+                        <td> {{user.rfc}} </td>
+                        <td *ngIf="user.role == 'ROLE_admin'" > Admin </td>
+                        <td *ngIf="user.role == 'ROLE_anunciante'"> Usuario </td>
+                        <td> {{getRelativeTime(user.updated_at)}} </td>
+                        <td>
+                            <a class="btn btn-info btn-circle text-white" [routerLink]="['/usuario/edit/'+ user.id]">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary btn-circle text-white" (click)="open(suprimModal, user.id)">
+                                <i class="fas fa-key"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-circle text-white" (click)="open(suprimModal, user.id)">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>    
+
+        <ng-template #suprimModal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-title">Eliminar Usuario</h4>
+                <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>¿Realmente deseas eliminar a este usuario?</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+                <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Aceptar</button>
+            </div>
+        </ng-template>
+
+        <!-- Modal Nuevo Usuario -->
+        <ng-template #userModal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Datos de Usuario</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #userForm="ngForm">
+                <div class="modal-body">
+            
+                    <div class="form-group" >
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="user.name" required>
+                        <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">El nombre es requerido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Apellido</label>
+                        <input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname" class="form-control" required>
+                        <small *ngIf="!lastname.valid && lastname.touched" class="invalid-feedback d-block">El apellido es requerido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Email</label>
+                        <input type="email" name="email" #email="ngModel" [(ngModel)] ="user.email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El email es inválido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">RFC</label>
+                        <input type="text" name="rfc" #rfc="ngModel" [(ngModel)]="user.rfc" class="form-control" minlength="13" maxlength="14" pattern="^[A-Z,Ñ,&]{3,4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z,0-9]?[A-Z,0-9]?[0-9,A-Z]?$">
+                        <small *ngIf="!rfc.valid && rfc.touched" class="invalid-feedback d-block">El rfc es inválido. Sólo mayúsculas y números</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Contraseña</label>
+                        <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" minlength="8" maxlength="12" required>
+                        <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">La contraseña es requerida</small>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" #role="ngModel" [(ngModel)]="user.role" value="ROLE_anunciante">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                        Anunciante
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" #role="ngModel" [(ngModel)]="user.role" value="ROLE_admin">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                        Administrador
+                        </label>
+                    </div>
+            
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="modal.dismiss('cancel click')">Cancelar</button>
+                    <button type="submit" class="btn btn-info" (click)="modal.close(user)" [disabled]="userForm.invalid">Guardar</button>
+                </div>
+            </form> 
+        </ng-template>
+
+    </div>
+</div>
