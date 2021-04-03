@@ -1,2 +1,87 @@
+<h3 *ngIf="categoria">{{categoria.nombre_categoria}} </h3>
 
-<p>subcategorias works!</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="float-left">Tabla de Subcategorias</h6>
+        <a class="btn btn-success text-white float-right" (click)="openModal(subcateModal)">
+            <i class="fas fa-plus-circle"></i>
+            Nueva subcategoria
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success mt-3" *ngIf="status == 'success'">
+            {{ message }}. 
+        </div>
+        <div class="alert alert-danger mt-3" *ngIf="status == 'error'">
+            {{ message }}
+            <ul>
+              <li *ngFor="let e of errores"> {{ e }} </li>
+            </ul>
+        </div>
+
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID Subcategoria</th>
+                        <th>Nombre</th>
+                        <th>Última actualización</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let subcat of subcategorias">
+                        <td>{{subcat.id}}</td>
+                        <td>{{subcat.nombre_subcategoria}} </td>
+                        <td>{{getRelativeTime(subcat.updated_at)}} </td>
+                        <td>
+                            <a class="btn btn-danger btn-circle text-white" (click)="open(suprimModal, subcat.id)">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #subcateModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Nueva subcategoria</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #subcateForm="ngForm">
+        <div class="modal-body">
+            <div class="form-group" >
+                <label for="name">Nombre de la subcategoria</label>
+                <input type="text" class="form-control" name="n_subcat.nombre_subcategoria" #n_subcat.nombre_subcategoria="ngModel" [(ngModel)]="n_subcat.nombre_subcategoria" required>
+                <small *ngIf="!n_subcat.nombre_subcategoria.valid && n_subcat.nombre_subcategoria.touched" class="invalid-feedback d-block">El nombre es requerido</small>
+            </div>
+    
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="modal.dismiss('cancel click')">Cancelar</button>
+            <button type="submit" class="btn btn-info" (click)="modal.close(cateModal)" [disabled]="subcateForm.invalid">Guardar</button>
+        </div>
+    </form> 
+</ng-template>
+
+<ng-template #suprimModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Eliminar Subcategoria</h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>¿Realmente deseas eliminar esta subcategoria?</strong></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Aceptar</button>
+    </div>
+</ng-template>

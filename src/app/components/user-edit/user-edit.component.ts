@@ -21,7 +21,7 @@ export class UserEditComponent implements OnInit {
   public errores: any;
   public afuConfig = {
     multiple: false,
-    formatsAllowed: ".jpg,.png, jpeg",
+    formatsAllowed: ".jpg,.png,.jpeg",
     maxSize: "3",
     uploadAPI:  {
       url: globalUrl.url + 'upload/avatar',

@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app.routing';
 import { SpinnerService } from './services/spinner.service';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AngularFileUploaderModule } from "angular-file-uploader";
 import { UserService } from './services/user.services';
 import { IdentityGuard } from './services/identitity.guard';
 import { DataTablesModule } from 'angular-datatables';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -24,6 +27,11 @@ import { SubcategoriasComponent } from './components/subcategorias/subcategorias
 import { LoginGuard } from './services/login.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { AnuncioDetailsComponent } from './components/anuncio-details/anuncio-details.component';
+import { NuevoAnuncioComponent } from './components/nuevo-anuncio/nuevo-anuncio.component';
+import {IvyGalleryModule} from 'angular-gallery';
+import { MapComponent } from './components/map/map.component';
+import { AnuncioEditComponent } from './components/anuncio-edit/anuncio-edit.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +46,10 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     CategoriasComponent,
     SubcategoriasComponent,
     UserEditComponent,
+    AnuncioDetailsComponent,
+    NuevoAnuncioComponent,
+    MapComponent,
+    AnuncioEditComponent
   ],
   imports: [
     BrowserModule,
@@ -46,8 +58,13 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     NgxSpinnerModule,
     HttpClientModule,
     DataTablesModule,
+    FroalaEditorModule,
+    FroalaViewModule,
     NgbModule,
-    AngularFileUploaderModule
+    AngularFileUploaderModule,
+    IvyGalleryModule,
+    BrowserAnimationsModule,
+    NgxDropzoneModule
   ],
   providers: [
     appRoutingProviders,

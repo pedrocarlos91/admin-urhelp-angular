@@ -1,2 +1,70 @@
+<h1>Estados</h1>
 
-<p>estados works!</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="float-left">Tabla de Estados</h6>
+        <a class="btn btn-success text-white float-right" (click)="openModal(estadoModal)">
+            <i class="fas fa-user-plus"></i>
+            Agregar Estado
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success mt-3" *ngIf="status == 'success'">
+            {{ message }}. 
+        </div>
+        <div class="alert alert-danger mt-3" *ngIf="status == 'error'">
+            {{ message }}
+            <ul>
+              <li *ngFor="let e of errores"> {{ e }} </li>
+            </ul>
+        </div>
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID Estado</th>
+                        <th>Estado</th>
+                        <th>Úĺtima actualización</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let estado of estados">
+                        <td> {{estado.id}} </td>
+                        <td> {{estado.nombre_estado}} </td>
+                        <td>{{getRelativeTime(estado.updated_at)}}</td>
+                        <td>
+                            <a class="btn btn-info btn-circle text-white" [routerLink]="['/estado/municipio/'+ estado.id]">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #estadoModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar Estado</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #estadoForm="ngForm">
+        <div class="modal-body">
+            <div class="form-group" >
+                <label for="name">Nombre del estado</label>
+                <input type="text" class="form-control" name="est.nombre_estado" #cate.nombre_categoria="ngModel" [(ngModel)]="est.nombre_estado" required>
+                <small *ngIf="!est.nombre_estado.valid && est.nombre_estado.touched" class="invalid-feedback d-block">El nombre es requerido</small>
+            </div>
+    
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="modal.dismiss('cancel click')">Cancelar</button>
+            <button type="submit" class="btn btn-info" (click)="modal.close(estadoModal)" [disabled]="estadoForm.invalid">Guardar</button>
+        </div>
+    </form> 
+</ng-template>

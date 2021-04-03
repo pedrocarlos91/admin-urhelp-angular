@@ -21,8 +21,8 @@ export class UsuariosComponent implements OnInit, OnDestroy{
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   isDtInitialized:boolean = false;
-  
   dtTrigger = new Subject();
+  
   public users: any;
   public tiempo:any;
   public user:User;

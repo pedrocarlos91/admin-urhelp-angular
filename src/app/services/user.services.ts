@@ -79,4 +79,9 @@ export class UserService{
   getUsers(): Observable<any>{
     return this._http.get(this.url + 'users');
   }
+
+  getAnunciantes(token): Observable<any>{
+    let headers = new HttpHeaders().set('Authorization', token);
+    return this._http.get(this.url + 'anunciantes', { headers: headers });
+  }
 }

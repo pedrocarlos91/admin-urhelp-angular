@@ -22,11 +22,11 @@ export class AppComponent implements OnInit, DoCheck{
   }
 
   ngOnInit(): void {
-    
+    this.checkSession();
   }
 
   ngDoCheck(){
-    this.checkSession()
+    this.checkSession();
   }
 
   checkSession(){

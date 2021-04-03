@@ -28,4 +28,8 @@ export class CategoriaService{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization', token);
         return this._http.post(this.url + 'servicios/categorias', params, { headers:headers });
     }
+
+    getCategoria(id): Observable<any> {
+        return this._http.get(this.url + 'servicios/categorias/'+ id);
+    }
 }

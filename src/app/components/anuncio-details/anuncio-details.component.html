@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-12">
+        <h1 class="float-left">Detalles del anuncio</h1>
+        <a class="btn btn-info text-white float-right" [routerLink]="['/anuncio/edit/'+ anuncioId]">
+            <i class="fa fa-pencil"></i>
+            Modificar Anuncio
+        </a>
+    </div>
+</div>
+
+
+<div class="row mt-3 pt-3" *ngIf="anuncio">
+    <div class="col-lg-7 col-md-7 col-sm-12">
+        <div class="mb-3">
+            <img *ngIf="anuncio.imagen" src="{{url + 'anuncios/image/' + anuncio.imagen}}" class="img-fluid w-100 h-100"
+                alt="Imágen principal del anuncio" (click)="showGallery(0)">
+            <img *ngIf="!anuncio.imagen" src="assets/images/placeholder.png" class="img-fluid w-100 h-100"
+                alt="Imágen principal del anuncio">
+        </div>
+        <div class="col-md-12 my-4">
+            <div class="row">
+                <div *ngFor="let image of imagenesGaleria; index as i" class="col-3 mb-5" style="height: 90px">
+                    <img src="{{url}}galerias/image/{{image.name}}" class="img-fluid w-100 h-100" alt="..."
+                        (click)="showGallery(i + 1)">
+                </div>
+            </div>
+        </div>
+
+        <h1> {{anuncio.titulo}} </h1>
+        <div class="text-right">
+            <p>{{anuncio.subcategoria.categoria.nombre_categoria}} > {{anuncio.subcategoria.nombre_subcategoria}}</p>
+        </div>
+
+        <div class="text-justify">
+            <h4>Descripción</h4>
+            <p [innerHTML]="anuncio.descripcion"></p>
+        </div>
+        <div class="text-right mt-5">
+            <p>{{anuncio.municipio.estado.nombre_estado}} - {{anuncio.municipio.nombre_municipio}}</p>
+        </div>
+        <div *ngIf="ubicacion">
+            <app-map></app-map>
+        </div>
+    </div>
+
+    
+    <div class="col-lg-5 col-md-5 col-sm-12">
+        <div class="card p-3 rounded">
+            <div class="text-center">
+                <h2>Horario de servicio</h2>
+            </div>
+            <hr>
+            <div class="row" *ngIf="anuncio.lunes">
+                <div class="col-6 float-left">
+                    Lunes
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.lunes_inicio)}} - {{getHourFormat(anuncio.lunes_fin)}}
+                </div>
+                <hr>
+            </div>
+            <div class="row" *ngIf="anuncio.martes">
+                <div class="col-6 float-left">
+                    Martes
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.martes_inicio)}} - {{getHourFormat(anuncio.martes_fin)}}
+                </div>
+                <hr>
+            </div>
+
+            <div class="row" *ngIf="anuncio.miercoles">
+                <div class="col-6 float-left">
+                    Miércoles
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.miercoles_inicio)}} - {{getHourFormat(anuncio.miercoles_fin)}}
+                </div>
+                <hr>
+            </div>
+
+            <div class="row" *ngIf="anuncio.jueves">
+                <div class="col-6 float-left">
+                    Jueves
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.jueves_inicio)}} - {{getHourFormat(anuncio.jueves_fin)}}
+                </div>
+                <hr>
+            </div>
+
+            <div class="row" *ngIf="anuncio.viernes">
+                <div class="col-6 float-left">
+                    Viernes
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.viernes_inicio)}} - {{getHourFormat(anuncio.viernes_fin)}}
+                </div>
+                <hr>
+            </div>
+
+            <div class="row" *ngIf="anuncio.sabado">
+                <div class="col-6 float-left">
+                    Sábado
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.sabado_inicio)}} - {{getHourFormat(anuncio.sabado_fin)}}
+                </div>
+                <hr>
+            </div>
+
+            <div class="row" *ngIf="anuncio.domingo">
+                <div class="col-6 float-left">
+                    Domingo
+                </div>
+                <div class="col-6 float-right text-right">
+                    {{getHourFormat(anuncio.domingo_inicio)}} - {{getHourFormat(anuncio.domingo_fin)}}
+                </div>
+            </div>
+
+        </div>
+    
+        <div class="card mt-3 p-3">
+            <div class="text-center">
+                <h2>Información de contacto</h2>
+            </div>
+            <hr>
+            <p>
+                <i class="fa fa-phone mr-2 bg-dark text-white text-center rounded-circle" aria-hidden="true"
+                    style="width: 25px; height: 25px; padding-top:5px;"></i>
+                {{anuncio.telefono}}
+            </p>
+            <p>
+                <i class="fa fa-whatsapp mr-2 bg-dark text-white text-center rounded-circle" aria-hidden="true"
+                    style="width: 25px; height: 25px; padding-top:5px;"></i>
+                {{anuncio.whatsapp}}
+            </p>
+            <p>
+                <i class="fa fa-envelope-o mr-2 bg-dark text-white text-center rounded-circle" aria-hidden="true"
+                    style="width: 25px; height: 25px; padding-top:5px;"></i>
+                {{anuncio.email}}
+            </p>
+            <p>
+                <i class="fa fa-user mr-2 bg-dark text-white text-center rounded-circle" aria-hidden="true"
+                    style="width: 25px; height: 25px; padding-top:5px;"></i>
+                {{anuncio.nombre_contacto}}
+            </p>
+
+        </div>
+        <div class="card mt-3 p-3">
+            <div class="text-center">
+                <h2>Pagos y Características</h2>
+            </div>
+            <hr>
+            <p>
+                <i class="fa fa-money mr-2 bg-dark text-white text-center rounded-circle" aria-hidden="true"
+                    style="width: 25px; height: 25px; padding-top:5px;"></i>
+                {{anuncio.tipo_cobro}}
+            </p>
+            <p>
+                <i class="fa fa-home mr-2 bg-dark text-white text-center rounded-circle" aria-hidden="true"
+                    style="width: 25px; height: 25px; padding-top:5px;"></i>
+                {{anuncio.tipo_servicio}}
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
