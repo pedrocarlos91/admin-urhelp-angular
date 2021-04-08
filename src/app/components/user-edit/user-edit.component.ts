@@ -103,8 +103,7 @@ export class UserEditComponent implements OnInit {
   }
 
   imageUpload(datos){
-    let data = datos.body;
+    let data = JSON.parse(datos.response);
     this.user.image = data.image;
-    console.log(this.user);
   }
 }

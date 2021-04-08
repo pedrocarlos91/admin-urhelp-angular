@@ -50,7 +50,7 @@
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-secondary btn-circle text-white" (click)="open(suprimModal, user.id)">
+                            <a class="btn btn-secondary btn-circle text-white" (click)="openCP(changePasswordModal, user.id)">
                                 <i class="fas fa-key"></i>
                             </a>
                         </td>
@@ -78,6 +78,25 @@
                 <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
                 <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Aceptar</button>
             </div>
+        </ng-template>
+
+        <ng-template #changePasswordModal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-title">Cambiar contraseña</h4>
+                <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #changePass="ngForm">
+                <div class="modal-body">
+                    <p><strong>Escribe la nueva contraseña para el usuario</strong></p>
+                    <input type="password" class="form-control" name="password" [(ngModel)] ="password" minlength="8" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+                    <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')" [disabled]="changePass.invalid">Guardar</button>
+                </div>
+            </form>
         </ng-template>
 
         <!-- Modal Nuevo Usuario -->

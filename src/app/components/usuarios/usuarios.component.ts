@@ -29,6 +29,7 @@ export class UsuariosComponent implements OnInit, OnDestroy{
   public status='';
   public message = '';
   public errores:any;
+  public password: string;
   closeResult: any;
   
   constructor(
@@ -158,9 +159,47 @@ export class UsuariosComponent implements OnInit, OnDestroy{
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       //botones de cierre Cancel y cross
-      console.log(this.closeResult);
+      
     });
 
+  }
+
+  openCP(changePasswordModal, id:number){
+    this.modalService.open(changePasswordModal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      //Cerrando OK.
+      let userCP = {
+        id: id,
+        password: this.password
+      };
+      this._userService.changePassAdmin(userCP, this._userService.gettoken()).subscribe(
+        response =>{
+          if(response.status == 'success'){
+            this.status = 'success';
+            this.message = 'La contraseña ha sido cambiada exitosamente';
+            this.getUsuarios();
+          }else{
+            this.status = 'error';
+            this.message = response.message;
+          }
+        },
+        error =>{
+          this.status = 'error';
+        this.message = error.error.message;
+        let err = error.error.errors;
+        var array = new Array();
+        var er;
+        var e;
+
+        for(er in err){
+          for(e in err[er]){
+            array.push(err[er][e]);
+          }
+        }
+        this.errores = array;
+        }
+      );
+    });
   }
 
   private getDismissReason(reason: any): string {
