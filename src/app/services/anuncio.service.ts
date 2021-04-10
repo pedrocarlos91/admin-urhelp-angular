@@ -31,6 +31,7 @@ export class AnuncioService{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
                                        .set('Authorization', token);
 
+        console.log(params);
         return this._http.put(this.url + 'anuncios/' + id, params, { headers:headers });
     }
 
