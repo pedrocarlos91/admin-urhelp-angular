@@ -12,7 +12,7 @@ import { globalUrl } from './services/global';
 export class AppComponent implements OnInit, DoCheck{
   
   public sesion: boolean;
-  public identity: object;
+  public identity: any;
   public url: string;
 
   constructor(private _userService:UserService){

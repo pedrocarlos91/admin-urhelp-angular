@@ -1,0 +1,155 @@
+<h1>Cupones de descuento</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="float-left">Tabla de Cupones</h6>
+        <a class="btn btn-success text-white float-right" (click)="openModal(cuponModal)">
+            <i class="fas fa-ticket-alt"></i>
+            Nuevo Cupón
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success mt-3" *ngIf="status == 'success'">
+            {{ message }}. 
+        </div>
+        <div class="alert alert-danger mt-3" *ngIf="status == 'error'">
+            {{ message }}
+            <ul>
+              <li *ngFor="let e of errores"> {{ e }} </li>
+            </ul>
+        </div>
+
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID Cupón</th>
+                        <th>Cupón</th>
+                        <th>Precio</th>
+                        <th>Cantidad Usos</th>
+                        <th>Veces Usado</th>
+                        <th>Fecha de creación</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cup of cupones">
+                        <td> {{cup.id}} </td>
+                        <td> {{cup.cupon}} </td>
+                        <td> ${{cup.precio}}.00 </td>
+                        <td> {{cup.limite_asignaciones}} </td>
+                        <td> {{cup.asignaciones}} </td>
+                        <td> {{getFormatDate(cup.created_at)}} </td>
+                        <td>
+                            <a class="btn btn-info btn-circle text-white" (click)="openEditModal(cuponEditModal, cup.id)">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-circle text-white" (click)="open(suprimModal, cup.id)">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #cuponModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Datos del Cupón</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #cuponForm="ngForm">
+        <div class="modal-body">
+    
+            <div class="form-group" >
+                <label for="cupon">Cupón</label>
+                <input type="text" class="form-control" name="cupon" #cupon="ngModel" [(ngModel)]="cupon_nuevo.cupon" required placeholder="Ejemplo: URHELP20">
+                <small *ngIf="!cupon.valid && cupon.touched" class="invalid-feedback d-block">El Id es requerido</small>
+            </div>
+            <div class="input-group mb-3">
+                <label for="precio">Cantidad de descuento</label>
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" name="precio" #precio="ngModel" [(ngModel)]="cupon_nuevo.precio" required pattern="\d+(\.\d{0,6})?">
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>
+                <small *ngIf="!precio.valid && precio.touched" class="invalid-feedback d-block">El precio es requerido. Sólo números</small>
+            </div>
+            <div class="form-group">
+                <label for="limite_asignaciones">Cantidad de veces que se puede usar</label>
+                <input type="number" class="form-control" min="1" max="999" name="limite_asignaciones" #limite_asignaciones="ngModel" [(ngModel)]="cupon_nuevo.limite_asignaciones" required>
+                <small *ngIf="!limite_asignaciones.valid && limite_asignaciones.touched" class="invalid-feedback d-block">La cantidad de veces es requerida</small>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="modal.dismiss('cancel click')">Cancelar</button>
+            <button type="submit" class="btn btn-info" (click)="modal.close(user)" [disabled]="cuponForm.invalid">Guardar</button>
+        </div>
+    </form> 
+</ng-template>
+
+
+<ng-template #cuponEditModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Datos del Cupón</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #cuponEditForm="ngForm">
+        <div class="modal-body">
+    
+            <div class="form-group" >
+                <label for="cupon">Cupón</label>
+                <label for="" class="form-control">{{ cuponEdit.cupon }}</label>  
+                
+            </div>
+            <div class="input-group mb-3">
+                <label for="precio">Cantidad de descuento</label>
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" name="precio" #precio="ngModel" [(ngModel)]="cuponEdit.precio" required pattern="\d+(\.\d{0,6})?">
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>
+                <small *ngIf="!precio.valid && precio.touched" class="invalid-feedback d-block">El precio es requerido. Sólo números</small>
+            </div>
+            <div class="form-group">
+                <label for="limite_asignaciones">Cantidad de veces que se puede usar</label>
+                <input type="number" class="form-control" min="1" max="999" name="limite_asignaciones" #limite_asignaciones="ngModel" [(ngModel)]="cuponEdit.limite_asignaciones" required>
+                <small *ngIf="!limite_asignaciones.valid && limite_asignaciones.touched" class="invalid-feedback d-block">La cantidad de veces es requerida</small>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="modal.dismiss('cancel click')">Cancelar</button>
+            <button type="submit" class="btn btn-info" (click)="modal.close(user)" [disabled]="cuponEditForm.invalid">Guardar</button>
+        </div>
+    </form> 
+</ng-template>
+
+<ng-template #suprimModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Eliminar Cupón</h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>¿Realmente deseas eliminar este cupón?</strong></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Aceptar</button>
+    </div>
+</ng-template>

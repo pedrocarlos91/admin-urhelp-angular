@@ -76,7 +76,7 @@ export class UsuariosComponent implements OnInit, OnDestroy{
         }
       },
       error => {
-        
+        console.log(error);
       }
     )
   }

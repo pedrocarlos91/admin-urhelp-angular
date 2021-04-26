@@ -32,6 +32,7 @@ import { NuevoAnuncioComponent } from './components/nuevo-anuncio/nuevo-anuncio.
 import {IvyGalleryModule} from 'angular-gallery';
 import { MapComponent } from './components/map/map.component';
 import { AnuncioEditComponent } from './components/anuncio-edit/anuncio-edit.component';
+import { CuponesComponent } from './components/cupones/cupones.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AnuncioEditComponent } from './components/anuncio-edit/anuncio-edit.com
     AnuncioDetailsComponent,
     NuevoAnuncioComponent,
     MapComponent,
-    AnuncioEditComponent
+    AnuncioEditComponent,
+    CuponesComponent
   ],
   imports: [
     BrowserModule,

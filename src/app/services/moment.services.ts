@@ -22,6 +22,10 @@ export class MomentService{
         var now = this.moment().format('YYYY/MM/DD HH:mm');
         return now;
     }
+
+    getFormatDate(date){
+        return this.moment(date).format('LLL');
+    }
     
     //Fecha relativa. En 8 días, hace 2 semanas
     getTimeFromNow(fecha){

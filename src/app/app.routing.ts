@@ -16,6 +16,7 @@
   import { AnuncioDetailsComponent } from './components/anuncio-details/anuncio-details.component';
   import { NuevoAnuncioComponent } from './components/nuevo-anuncio/nuevo-anuncio.component';
   import { AnuncioEditComponent } from './components/anuncio-edit/anuncio-edit.component';
+  import { CuponesComponent } from './components/cupones/cupones.component';
   import { IdentityGuard } from './services/identitity.guard';
   import { LoginGuard } from './services/login.guard';
   
@@ -36,7 +37,8 @@
     { path:'estado/municipio/:id', component: MuniciposComponent, canActivate: [IdentityGuard]},
     { path:'municipios', component: MuniciposComponent, canActivate: [IdentityGuard] },
     { path:'categorias', component: CategoriasComponent, canActivate: [IdentityGuard] },
-    { path:'categoria/subcat/:id', component: SubcategoriasComponent, canActivate: [IdentityGuard] }
+    { path:'categoria/subcat/:id', component: SubcategoriasComponent, canActivate: [IdentityGuard] },
+    { path:'cupones', component:CuponesComponent, canActivate: [IdentityGuard] }
   ];
 
   //Exportar la confuguración
