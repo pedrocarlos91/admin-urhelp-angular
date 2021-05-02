@@ -29,6 +29,7 @@
                         <th>Cantidad Usos</th>
                         <th>Veces Usado</th>
                         <th>Fecha de creación</th>
+                        <th>Fecha de vencimiento</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -41,6 +42,7 @@
                         <td> {{cup.limite_asignaciones}} </td>
                         <td> {{cup.asignaciones}} </td>
                         <td> {{getFormatDate(cup.created_at)}} </td>
+                        <td> {{getFormatDate(cup.fecha_vencimiento)}} </td>
                         <td>
                             <a class="btn btn-info btn-circle text-white" (click)="openEditModal(cuponEditModal, cup.id)">
                                 <i class="fas fa-edit"></i>
@@ -129,6 +131,10 @@
                 <label for="limite_asignaciones">Cantidad de veces que se puede usar</label>
                 <input type="number" class="form-control" min="1" max="999" name="limite_asignaciones" #limite_asignaciones="ngModel" [(ngModel)]="cuponEdit.limite_asignaciones" required>
                 <small *ngIf="!limite_asignaciones.valid && limite_asignaciones.touched" class="invalid-feedback d-block">La cantidad de veces es requerida</small>
+            </div>
+            <div class="form-group">
+                <label for="fecha_vencimiento">Fecha de vencimiento</label>
+                <input type="date" class="form-control" name="fecha_vencimiento" #fecha_vencimiento="ngModel" [(ngModel)]="cuponEdit.fecha_vencimiento">
             </div>
         </div>
         <div class="modal-footer">

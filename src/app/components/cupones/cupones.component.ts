@@ -38,7 +38,7 @@ export class CuponesComponent implements OnInit {
     private _userService: UserService,
     private _moment: MomentService
   ) { 
-    this.cupon_nuevo = new Cupon('', 0, 1, 0);
+    this.cupon_nuevo = new Cupon('', 0, 1, 0, '');
   }
 
   ngOnInit(): void {
