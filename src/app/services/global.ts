@@ -1,3 +1,3 @@
 export var globalUrl = {
-  url: 'http://ur-help.test/'
+  url: 'https://api.ur-help.mx/ur-help/public/'
 }

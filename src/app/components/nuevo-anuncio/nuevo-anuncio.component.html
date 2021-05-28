@@ -33,7 +33,7 @@
         
         <div class="form-group">
           <label for="">Descripción del servicio</label>
-          <textarea  rows="5" [froalaEditor] name="descripcion" #descripcion="ngModel" [(ngModel)]="anuncio.descripcion" class="form-control" required></textarea>
+          <textarea  rows="5" name="descripcion" #descripcion="ngModel" [(ngModel)]="anuncio.descripcion" class="form-control" required></textarea>
           <small *ngIf="!descripcion.valid && descripcion.touched" class="invalid-feedback d-block">La descripción del servicio es requerida</small>
         </div>
 

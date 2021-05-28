@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit {
                 response.image
               );
               
-              sessionStorage.setItem('token', this.token);       //Se guarda en entorno local la informacion de token
-              sessionStorage.setItem('dataUser', JSON.stringify(this.dataUser)); //Se guarda en entorno local la informacion de usuario
+              localStorage.setItem('token', this.token);       //Se guarda en entorno local la informacion de token
+              localStorage.setItem('dataUser', JSON.stringify(this.dataUser)); //Se guarda en entorno local la informacion de usuario
               form.reset();
               this._router.navigate(['/']);
               window.location.reload();
@@ -83,8 +83,8 @@ export class LoginComponent implements OnInit {
     this._route.params.subscribe(params => {
       let logout = +params['sure'];
       if(logout == 1){
-        sessionStorage.removeItem('dataUser');
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('dataUser');
+        localStorage.removeItem('token');
 
         this.dataUser = null;
         this.token = null;

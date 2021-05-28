@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app.routing';
 import { SpinnerService } from './services/spinner.service';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AngularFileUploaderModule } from "angular-file-uploader";
 import { UserService } from './services/user.services';
@@ -60,8 +59,6 @@ import { CuponesComponent } from './components/cupones/cupones.component';
     NgxSpinnerModule,
     HttpClientModule,
     DataTablesModule,
-    FroalaEditorModule,
-    FroalaViewModule,
     NgbModule,
     AngularFileUploaderModule,
     IvyGalleryModule,
